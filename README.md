@@ -7,7 +7,6 @@
 | nickname               | string              | null: false             |
 | email                  | string              | null: false             |
 | password               | string              | null: false             |
-| password confirmation  | string              | null: false             |
 | last_name              | string              | null: false             |
 | first_name             | string              | null: false             |
 | last_name_kana         | string              | null: false             |
@@ -19,16 +18,15 @@
 ### Association
 
 * has_many :items
-* has_many :purchase
+* has_many :purchases
 
 ## items table
 
 | Column                 | Type                | Options                 |
 |------------------------|---------------------|-------------------------|
-| user                   | references          | foreign_key             |
+| user                   | references          | foreign_key: true       |
 | name                   | string              | null: false             |
 | description            | text                | null: false             |
-| images_id              | integer             | null: false             |
 | category_id            | integer             | null: false             |
 | condition_id           | integer             | null: false             |
 | postage_payer_id       | integer             | null: false             |
@@ -39,8 +37,8 @@
 ### Association
 
 - belongs_to :user
-- has_many :images
-  has_one :purchases
+- has_one_attached :image
+  has_one :purchase
 
 
 
@@ -54,22 +52,10 @@
 
 ### Association
 
-- has_one :addresses
+- has_one :address
 - belongs_to :user
-- belongs_to :items
+- belongs_to :item
 
-
-## images table
-
-| Column      | Type       | Options           |
-|-------------|------------|-------------------|
-| image       | string     | null:false        |
-| item        | references | foreign_key: true |
-
-
-### Association
-
-- belongs_to :items
 
 
 
@@ -80,6 +66,7 @@
 | post_code              | string              | null: false             |
 | prefectures_id         | integer             | foreign_key: true       |
 | city                   | string              | null: false             |
+| block_number           | string              | null: false             |
 | building_name          | string              |                         |
 | phone_number           | string              | null: false             |
 | purchase               | references          | foreign_key: true       |
@@ -89,4 +76,4 @@
 
 ### Association
 
-* belongs_to :purchases
+* belongs_to :purchase
