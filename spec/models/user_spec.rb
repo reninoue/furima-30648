@@ -6,6 +6,9 @@ describe User do
   end
 
   describe '新規登録/ユーザー情報' do
+    it '新規登録が正常に完了する' do
+      expect(@user).to be_valid
+    end
     it 'nicknameが空だと保存できない' do
       @user.nickname = ''
       @user.valid?
@@ -40,6 +43,11 @@ describe User do
     end
     it 'password:半角英数混合(半角英語のみ)' do
       @user.password = 'aaaaaaa'
+      @user.valid?
+      expect(@user.errors.full_messages).to include('Password include both letters and numbers')
+    end
+    it 'password:半角英数混合(半角数字のみ)' do
+      @user.password = '7777777'
       @user.valid?
       expect(@user.errors.full_messages).to include('Password include both letters and numbers')
     end
