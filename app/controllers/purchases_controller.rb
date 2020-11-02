@@ -2,6 +2,7 @@ class PurchasesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_item, only: [:index, :create]
   def index
+    
       if current_user == @item.user || @item.purchase != nil
         redirect_to root_path
       else
@@ -12,6 +13,7 @@ class PurchasesController < ApplicationController
   
   def create
     @user_purchase = UserPurchase.new(purchase_params)
+    
      if @user_purchase.valid?
        pay_item
        @user_purchase.save
@@ -29,7 +31,6 @@ class PurchasesController < ApplicationController
 
   def pay_item
     Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
-    # Payjp.api_key = "sk_test_4f0c0ed17bca29c7a576499f"
       Payjp::Charge.create(
         amount: @item.price,
         card: purchase_params[:token],
@@ -38,6 +39,6 @@ class PurchasesController < ApplicationController
   end
 
   def set_item
-    @item = Item.find(params[:id])
+    @item = Item.find(params[:item_id])
   end
 end
