@@ -10,6 +10,10 @@ describe UserPurchase do
     it '購入が正常に完了する' do
       expect(@user_purchase).to be_valid
     end
+    it 'buliding_nameが空でも成功する' do
+      @user_purchase.building_name = nil
+      expect(@user_purchase).to be_valid
+    end
   end
 
 
